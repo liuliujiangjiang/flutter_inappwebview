@@ -1,7 +1,7 @@
 package com.pichillilorenzo.flutter_inappwebview.InAppWebView;
 
 import android.util.Log;
-import android.webkit.WebView;
+import com.tencent.smtt.sdk.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +33,7 @@ public class InAppWebViewRenderProcessClient extends WebViewRenderProcessClient 
   }
 
   @Override
-  public void onRenderProcessUnresponsive(@NonNull WebView view, @Nullable final WebViewRenderProcess renderer) {
+  public void onRenderProcessUnresponsive(@NonNull android.webkit.WebView view, @Nullable final WebViewRenderProcess renderer) {
     Map<String, Object> obj = new HashMap<>();
     if (inAppBrowserActivity != null)
       obj.put("uuid", inAppBrowserActivity.uuid);
@@ -67,7 +67,7 @@ public class InAppWebViewRenderProcessClient extends WebViewRenderProcessClient 
   }
 
   @Override
-  public void onRenderProcessResponsive(@NonNull WebView view, @Nullable final WebViewRenderProcess renderer) {
+  public void onRenderProcessResponsive(@NonNull android.webkit.WebView view, @Nullable final WebViewRenderProcess renderer) {
     Map<String, Object> obj = new HashMap<>();
     if (inAppBrowserActivity != null)
       obj.put("uuid", inAppBrowserActivity.uuid);

@@ -8,11 +8,11 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import androidx.webkit.WebViewCompat;
 import androidx.webkit.WebViewFeature;
@@ -377,7 +377,7 @@ public class FlutterWebView implements PlatformView, MethodCallHandler  {
       case "zoomBy":
         if (webView != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
           double zoomFactor = (double) call.argument("zoomFactor");
-          webView.zoomBy((float) zoomFactor);
+//          webView.zoomBy((float) zoomFactor);
           result.success(true);
         } else {
           result.success(false);

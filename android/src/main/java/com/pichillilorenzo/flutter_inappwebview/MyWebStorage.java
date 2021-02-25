@@ -1,8 +1,8 @@
 package com.pichillilorenzo.flutter_inappwebview;
 
 import android.util.Log;
-import android.webkit.ValueCallback;
-import android.webkit.WebStorage;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebStorage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,8 +66,7 @@ public class MyWebStorage implements MethodChannel.MethodCallHandler {
       public void onReceiveValue(Map value) {
         List<Map<String, Object>> origins = new ArrayList<>();
         for(Object key : value.keySet()) {
-          WebStorage.Origin originObj = (WebStorage.Origin) value.get(key);
-
+         android.webkit.WebStorage.Origin originObj = (android.webkit.WebStorage.Origin) value.get(key);
           Map<String, Object> originInfo = new HashMap<>();
           originInfo.put("origin", originObj.getOrigin());
           originInfo.put("quota", originObj.getQuota());

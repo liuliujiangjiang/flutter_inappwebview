@@ -31,15 +31,17 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.CookieManager;
-import android.webkit.DownloadListener;
-import android.webkit.ValueCallback;
-import android.webkit.WebBackForwardList;
-import android.webkit.WebChromeClient;
-import android.webkit.WebHistoryItem;
-import android.webkit.WebSettings;
-import android.webkit.WebStorage;
-import android.webkit.WebViewClient;
+
+import com.tencent.smtt.export.external.interfaces.IX5WebViewBase;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.DownloadListener;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebBackForwardList;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebHistoryItem;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebStorage;
+import com.tencent.smtt.sdk.WebViewClient;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -666,10 +668,10 @@ final public class InAppWebView extends InputAwareWebView {
     inAppWebViewClient = new InAppWebViewClient((isFromInAppBrowserActivity) ? inAppBrowserActivity : flutterWebView);
     setWebViewClient(inAppWebViewClient);
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && WebViewFeature.isFeatureSupported(WebViewFeature.WEB_VIEW_RENDERER_CLIENT_BASIC_USAGE)) {
-      inAppWebViewRenderProcessClient = new InAppWebViewRenderProcessClient((isFromInAppBrowserActivity) ? inAppBrowserActivity : flutterWebView);
-      WebViewCompat.setWebViewRenderProcessClient(this, inAppWebViewRenderProcessClient);
-    }
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && WebViewFeature.isFeatureSupported(WebViewFeature.WEB_VIEW_RENDERER_CLIENT_BASIC_USAGE)) {
+//      inAppWebViewRenderProcessClient = new InAppWebViewRenderProcessClient((isFromInAppBrowserActivity) ? inAppBrowserActivity : flutterWebView);
+//      WebViewCompat.setWebViewRenderProcessClient(this, inAppWebViewRenderProcessClient);
+//    }
 
     if (options.useOnDownloadStart)
       setDownloadListener(new DownloadStartListener());
@@ -744,14 +746,14 @@ final public class InAppWebView extends InputAwareWebView {
     settings.setDefaultFontSize(options.defaultFontSize);
     settings.setDefaultTextEncodingName(options.defaultTextEncodingName);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && options.disabledActionModeMenuItems != null)
-      settings.setDisabledActionModeMenuItems(options.disabledActionModeMenuItems);
+//      settings.setDisabledActionModeMenuItems(options.disabledActionModeMenuItems);
     settings.setFantasyFontFamily(options.fantasyFontFamily);
     settings.setFixedFontFamily(options.fixedFontFamily);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && options.forceDark != null)
-      settings.setForceDark(options.forceDark);
+//      settings.setForceDark(options.forceDark);
     settings.setGeolocationEnabled(options.geolocationEnabled);
     if (options.layoutAlgorithm != null) {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && options.layoutAlgorithm.equals(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING)) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && options.layoutAlgorithm.equals(WebSettings.LayoutAlgorithm.NORMAL)) {
         settings.setLayoutAlgorithm(options.layoutAlgorithm);
       } else {
         settings.setLayoutAlgorithm(options.layoutAlgorithm);
@@ -763,7 +765,7 @@ final public class InAppWebView extends InputAwareWebView {
     setInitialScale(options.initialScale);
     settings.setNeedInitialFocus(options.needInitialFocus);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-      settings.setOffscreenPreRaster(options.offscreenPreRaster);
+//      settings.setOffscreenPreRaster(options.offscreenPreRaster);
     settings.setSansSerifFontFamily(options.sansSerifFontFamily);
     settings.setSerifFontFamily(options.serifFontFamily);
     settings.setStandardFontFamily(options.standardFontFamily);
@@ -816,7 +818,7 @@ final public class InAppWebView extends InputAwareWebView {
       contentBlockerHandler.getRuleList().add(new ContentBlocker(trigger, action));
     }
 
-    setFindListener(new FindListener() {
+    setFindListener(new IX5WebViewBase.FindListener() {
       @Override
       public void onFindResultReceived(int activeMatchOrdinal, int numberOfMatches, boolean isDoneCounting) {
         Map<String, Object> obj = new HashMap<>();
@@ -1286,7 +1288,7 @@ final public class InAppWebView extends InputAwareWebView {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
       if (newOptionsMap.get("disabledActionModeMenuItems") != null && (options.disabledActionModeMenuItems == null ||
             !options.disabledActionModeMenuItems.equals(newOptions.disabledActionModeMenuItems)))
-        settings.setDisabledActionModeMenuItems(newOptions.disabledActionModeMenuItems);
+//        settings.setDisabledActionModeMenuItems(newOptions.disabledActionModeMenuItems);
 
     if (newOptionsMap.get("fantasyFontFamily") != null && !options.fantasyFontFamily.equals(newOptions.fantasyFontFamily))
       settings.setFantasyFontFamily(newOptions.fantasyFontFamily);
@@ -1296,13 +1298,13 @@ final public class InAppWebView extends InputAwareWebView {
 
     if (newOptionsMap.get("forceDark") != null && !options.forceDark.equals(newOptions.forceDark))
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-        settings.setForceDark(newOptions.forceDark);
+//        settings.setForceDark(newOptions.forceDark);
 
     if (newOptionsMap.get("geolocationEnabled") != null && options.geolocationEnabled != newOptions.geolocationEnabled)
       settings.setGeolocationEnabled(newOptions.geolocationEnabled);
 
     if (newOptionsMap.get("layoutAlgorithm") != null && options.layoutAlgorithm != newOptions.layoutAlgorithm) {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && newOptions.layoutAlgorithm.equals(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING)) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && newOptions.layoutAlgorithm.equals(WebSettings.LayoutAlgorithm.NORMAL)) {
         settings.setLayoutAlgorithm(newOptions.layoutAlgorithm);
       } else {
         settings.setLayoutAlgorithm(newOptions.layoutAlgorithm);
@@ -1329,7 +1331,7 @@ final public class InAppWebView extends InputAwareWebView {
 
     if (newOptionsMap.get("offscreenPreRaster") != null && options.offscreenPreRaster != newOptions.offscreenPreRaster)
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        settings.setOffscreenPreRaster(newOptions.offscreenPreRaster);
+//        settings.setOffscreenPreRaster(newOptions.offscreenPreRaster);
 
     if (newOptionsMap.get("sansSerifFontFamily") != null && !options.sansSerifFontFamily.equals(newOptions.sansSerifFontFamily))
       settings.setSansSerifFontFamily(newOptions.sansSerifFontFamily);
@@ -1587,7 +1589,7 @@ final public class InAppWebView extends InputAwareWebView {
       String jobName = getTitle() + " Document";
 
       // Get a printCurrentPage adapter instance
-      PrintDocumentAdapter printAdapter = createPrintDocumentAdapter(jobName);
+      PrintDocumentAdapter printAdapter = (PrintDocumentAdapter) createPrintDocumentAdapter(jobName);
 
       // Create a printCurrentPage job with name and adapter instance
       printManager.print(jobName, printAdapter,
@@ -1780,7 +1782,7 @@ final public class InAppWebView extends InputAwareWebView {
           }
         }
       });
-      addView(floatingContextMenu, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, x, y));
+//      addView(floatingContextMenu, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, x, y));
       if (hasBeenRemovedAndRebuilt) {
         sendOnCreateContextMenuEvent();
       }
@@ -1810,10 +1812,10 @@ final public class InAppWebView extends InputAwareWebView {
       cury = y + height;
     }
 
-    updateViewLayout(
-            floatingContextMenu,
-            new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, curx, ((int) cury) + getScrollY())
-    );
+//    updateViewLayout(
+//            floatingContextMenu,
+//            new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, curx, ((int) cury) + getScrollY())
+//    );
 
     headlessHandler.post(new Runnable() {
       @Override

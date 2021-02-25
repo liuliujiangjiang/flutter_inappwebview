@@ -1,7 +1,7 @@
 package com.pichillilorenzo.flutter_inappwebview;
 
 import android.os.Build;
-import android.webkit.WebViewDatabase;
+import com.tencent.smtt.sdk.WebViewDatabase;
 
 import androidx.annotation.RequiresApi;
 

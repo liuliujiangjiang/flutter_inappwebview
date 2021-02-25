@@ -4,7 +4,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.webkit.WebResourceResponse;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 
 import com.pichillilorenzo.flutter_inappwebview.InAppWebView.InAppWebView;
 import com.pichillilorenzo.flutter_inappwebview.Util;

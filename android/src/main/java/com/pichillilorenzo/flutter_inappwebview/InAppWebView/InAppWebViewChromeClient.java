@@ -20,15 +20,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.ConsoleMessage;
-import android.webkit.GeolocationPermissions;
-import android.webkit.JsPromptResult;
-import android.webkit.JsResult;
+import com.tencent.smtt.export.external.interfaces.ConsoleMessage;
+import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
+import com.tencent.smtt.export.external.interfaces.JsPromptResult;
+import com.tencent.smtt.export.external.interfaces.JsResult;
 import android.webkit.MimeTypeMap;
 import android.webkit.PermissionRequest;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -93,7 +94,7 @@ public class InAppWebViewChromeClient extends WebChromeClient implements PluginR
           View.SYSTEM_UI_FLAG_FULLSCREEN;
 
   private View mCustomView;
-  private WebChromeClient.CustomViewCallback mCustomViewCallback;
+//  private WebChromeClient.CustomViewCallback mCustomViewCallback;
   private int mOriginalOrientation;
   private int mOriginalSystemUiVisibility;
 
@@ -131,8 +132,8 @@ public class InAppWebViewChromeClient extends WebChromeClient implements PluginR
     this.mCustomView = null;
     decorView.setSystemUiVisibility(this.mOriginalSystemUiVisibility);
     activity.setRequestedOrientation(this.mOriginalOrientation);
-    this.mCustomViewCallback.onCustomViewHidden();
-    this.mCustomViewCallback = null;
+//    this.mCustomViewCallback.onCustomViewHidden();
+//    this.mCustomViewCallback = null;
     activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     Map<String, Object> obj = new HashMap<>();
     if (inAppBrowserActivity != null)
@@ -141,34 +142,38 @@ public class InAppWebViewChromeClient extends WebChromeClient implements PluginR
   }
 
   @Override
-  public void onShowCustomView(final View paramView, final CustomViewCallback paramCustomViewCallback) {
-    if (this.mCustomView != null) {
-      onHideCustomView();
-      return;
-    }
-
-    Activity activity = inAppBrowserActivity != null ? inAppBrowserActivity : Shared.activity;
-
-    View decorView = getRootView();
-    this.mCustomView = paramView;
-    this.mOriginalSystemUiVisibility = decorView.getSystemUiVisibility();
-    this.mOriginalOrientation = activity.getRequestedOrientation();
-    this.mCustomViewCallback = paramCustomViewCallback;
-    this.mCustomView.setBackgroundColor(Color.BLACK);
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-      decorView.setSystemUiVisibility(FULLSCREEN_SYSTEM_UI_VISIBILITY_KITKAT);
-    } else {
-      decorView.setSystemUiVisibility(FULLSCREEN_SYSTEM_UI_VISIBILITY);
-    }
-    activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-    ((FrameLayout) decorView).addView(this.mCustomView, FULLSCREEN_LAYOUT_PARAMS);
-
-    Map<String, Object> obj = new HashMap<>();
-    if (inAppBrowserActivity != null)
-      obj.put("uuid", inAppBrowserActivity.uuid);
-    channel.invokeMethod("onEnterFullscreen", obj);
+  public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
+    super.onShowCustomView(view, customViewCallback);
   }
+//  @Override
+//  public void onShowCustomView(final View paramView, final CustomViewCallback paramCustomViewCallback) {
+//    if (this.mCustomView != null) {
+//      onHideCustomView();
+//      return;
+//    }
+//
+//    Activity activity = inAppBrowserActivity != null ? inAppBrowserActivity : Shared.activity;
+//
+//    View decorView = getRootView();
+//    this.mCustomView = paramView;
+//    this.mOriginalSystemUiVisibility = decorView.getSystemUiVisibility();
+//    this.mOriginalOrientation = activity.getRequestedOrientation();
+//    this.mCustomViewCallback = paramCustomViewCallback;
+//    this.mCustomView.setBackgroundColor(Color.BLACK);
+//
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//      decorView.setSystemUiVisibility(FULLSCREEN_SYSTEM_UI_VISIBILITY_KITKAT);
+//    } else {
+//      decorView.setSystemUiVisibility(FULLSCREEN_SYSTEM_UI_VISIBILITY);
+//    }
+//    activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//    ((FrameLayout) decorView).addView(this.mCustomView, FULLSCREEN_LAYOUT_PARAMS);
+//
+//    Map<String, Object> obj = new HashMap<>();
+//    if (inAppBrowserActivity != null)
+//      obj.put("uuid", inAppBrowserActivity.uuid);
+//    channel.invokeMethod("onEnterFullscreen", obj);
+//  }
 
   @Override
   public boolean onJsAlert(final WebView view, String url, final String message,
@@ -358,8 +363,7 @@ public class InAppWebViewChromeClient extends WebChromeClient implements PluginR
   }
 
   @Override
-  public boolean onJsPrompt(final WebView view, String url, final String message,
-                            final String defaultValue, final JsPromptResult result) {
+  public boolean onJsPrompt(final WebView view, final String url, final String message,final String defaultValue, final com.tencent.smtt.export.external.interfaces.JsPromptResult result) {
     Map<String, Object> obj = new HashMap<>();
     if (inAppBrowserActivity != null)
       obj.put("uuid", inAppBrowserActivity.uuid);
@@ -652,7 +656,7 @@ public class InAppWebViewChromeClient extends WebChromeClient implements PluginR
   }
 
   @Override
-  public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissions.Callback callback) {
+  public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissionsCallback callback) {
     Map<String, Object> obj = new HashMap<>();
     if (inAppBrowserActivity != null)
       obj.put("uuid", inAppBrowserActivity.uuid);
@@ -786,7 +790,7 @@ public class InAppWebViewChromeClient extends WebChromeClient implements PluginR
     startPhotoPickerIntent(filePathCallback, "");
   }
 
-  protected void openFileChooser(ValueCallback<Uri> filePathCallback, String acceptType, String capture) {
+  public void openFileChooser(ValueCallback<Uri> filePathCallback, String acceptType, String capture) {
     startPhotoPickerIntent(filePathCallback, acceptType);
   }
 
@@ -1091,7 +1095,7 @@ public class InAppWebViewChromeClient extends WebChromeClient implements PluginR
   }
 
   @Override
-  public void onPermissionRequest(final PermissionRequest request) {
+  public void onPermissionRequest(final com.tencent.smtt.export.external.interfaces.PermissionRequest request) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       Map<String, Object> obj = new HashMap<>();
       if (inAppBrowserActivity != null)

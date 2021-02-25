@@ -5,7 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
-import android.webkit.ValueCallback;
+import com.tencent.smtt.sdk.ValueCallback;
 
 import com.pichillilorenzo.flutter_inappwebview.InAppWebView.FlutterWebViewFactory;
 

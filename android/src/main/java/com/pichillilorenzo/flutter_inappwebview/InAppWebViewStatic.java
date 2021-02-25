@@ -2,9 +2,9 @@ package com.pichillilorenzo.flutter_inappwebview;
 
 import android.content.pm.PackageInfo;
 import android.os.Build;
-import android.webkit.ValueCallback;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
 
 import androidx.webkit.WebViewCompat;
 import androidx.webkit.WebViewFeature;
@@ -35,12 +35,13 @@ public class InAppWebViewStatic implements MethodChannel.MethodCallHandler {
         break;
       case "clearClientCertPreferences":
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-          WebView.clearClientCertPreferences(new Runnable() {
-            @Override
-            public void run() {
-              result.success(true);
-            }
-          });
+//          WebView.clearClientCertPreferences(new Runnable() {
+//            @Override
+//            public void run() {
+//              result.success(true);
+//            }
+//          });
+          result.success(true);
         } else {
           result.success(false);
         }

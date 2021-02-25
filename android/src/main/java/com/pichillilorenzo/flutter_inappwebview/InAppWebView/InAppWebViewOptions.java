@@ -3,7 +3,7 @@ package com.pichillilorenzo.flutter_inappwebview.InAppWebView;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebSettings;
+import com.tencent.smtt.sdk.WebSettings;
 
 import com.pichillilorenzo.flutter_inappwebview.Options;
 
@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.webkit.WebSettings.LayoutAlgorithm.NARROW_COLUMNS;
-import static android.webkit.WebSettings.LayoutAlgorithm.NORMAL;
+import static com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm.NARROW_COLUMNS;
+import static com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm.NORMAL;
 
 public class InAppWebViewOptions implements Options<InAppWebView> {
 
@@ -455,8 +455,8 @@ public class InAppWebViewOptions implements Options<InAppWebView> {
       }
       realOptions.put("allowContentAccess", settings.getAllowContentAccess());
       realOptions.put("allowFileAccess", settings.getAllowFileAccess());
-      realOptions.put("allowFileAccessFromFileURLs", settings.getAllowFileAccessFromFileURLs());
-      realOptions.put("allowUniversalAccessFromFileURLs", settings.getAllowUniversalAccessFromFileURLs());
+      realOptions.put("allowFileAccessFromFileURLs", settings.getAllowFileAccess());
+      realOptions.put("allowUniversalAccessFromFileURLs", settings.getAllowFileAccess());
       realOptions.put("blockNetworkImage", settings.getBlockNetworkImage());
       realOptions.put("blockNetworkLoads", settings.getBlockNetworkLoads());
       realOptions.put("cacheMode", settings.getCacheMode());
@@ -465,19 +465,19 @@ public class InAppWebViewOptions implements Options<InAppWebView> {
       realOptions.put("defaultFontSize", settings.getDefaultFontSize());
       realOptions.put("defaultTextEncodingName", settings.getDefaultTextEncodingName());
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        realOptions.put("disabledActionModeMenuItems", settings.getDisabledActionModeMenuItems());
+        realOptions.put("disabledActionModeMenuItems", true);
       }
       realOptions.put("fantasyFontFamily", settings.getFantasyFontFamily());
       realOptions.put("fixedFontFamily", settings.getFixedFontFamily());
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        realOptions.put("forceDark", settings.getForceDark());
+        realOptions.put("forceDark", false);
       }
       realOptions.put("layoutAlgorithm", settings.getLayoutAlgorithm().name());
       realOptions.put("loadWithOverviewMode", settings.getLoadWithOverviewMode());
       realOptions.put("loadsImagesAutomatically", settings.getLoadsImagesAutomatically());
       realOptions.put("minimumLogicalFontSize", settings.getMinimumLogicalFontSize());
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        realOptions.put("offscreenPreRaster", settings.getOffscreenPreRaster());
+        realOptions.put("offscreenPreRaster", false);
       }
       realOptions.put("sansSerifFontFamily", settings.getSansSerifFontFamily());
       realOptions.put("serifFontFamily", settings.getSerifFontFamily());
@@ -509,7 +509,7 @@ public class InAppWebViewOptions implements Options<InAppWebView> {
           layoutAlgorithm = NORMAL;
         case "TEXT_AUTOSIZING":
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING;
+            layoutAlgorithm = NORMAL;
           } else {
             layoutAlgorithm = NORMAL;
           }
@@ -523,12 +523,6 @@ public class InAppWebViewOptions implements Options<InAppWebView> {
       switch (layoutAlgorithm) {
         case NORMAL:
           return "NORMAL";
-        case TEXT_AUTOSIZING:
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return "TEXT_AUTOSIZING";
-          } else {
-            return "NORMAL";
-          }
         case NARROW_COLUMNS:
           return "NARROW_COLUMNS";
       }

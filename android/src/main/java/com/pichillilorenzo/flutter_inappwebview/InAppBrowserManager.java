@@ -29,7 +29,7 @@ import android.os.Parcelable;
 import android.provider.Browser;
 import android.net.Uri;
 import android.os.Bundle;
-import android.webkit.MimeTypeMap;
+import com.tencent.smtt.sdk.MimeTypeMap;
 import android.util.Log;
 
 import com.pichillilorenzo.flutter_inappwebview.InAppBrowser.InAppBrowserActivity;

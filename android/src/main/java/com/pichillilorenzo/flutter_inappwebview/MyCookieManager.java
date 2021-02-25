@@ -2,9 +2,9 @@ package com.pichillilorenzo.flutter_inappwebview;
 
 import android.os.Build;
 import android.util.Log;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.ValueCallback;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.CookieSyncManager;
+import com.tencent.smtt.sdk.ValueCallback;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
